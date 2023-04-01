@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+		th:replace="/fragments/base::layout(~{this::section})">
+<head>
+	<meta charset="UTF-8">
+	<title>Home Page</title>
+</head>
+<body>
+<!-- Body	-->
+<section>
+	<div id="main-content">
+		<div id="content-wrapper">
+			<div class="item" th:each="item : ${pages}">				
+				<a th:href="@{'/product/productInfo/' + ${item.Id}}"><img th:src="${item.imgSource}" alt=""></a>
+				<h4 class="product-type" th:text="${item.type}"></h4>
+				<h4 class="product-name" th:text="${item.name}"></h4>
+				<p class="product-price" th:text="${#numbers.formatCurrency(item.price)}"></p>				
+			</div>	
+		</div>
+		
+		<div id="pages-nav" th:if = "${pages.totalPages > 0}">
+			Page:
+			<span th:each="i : ${#numbers.sequence(0, pages.totalPages - 1)}">
+				<a th:class="${pages.number == i ? 'active' : ''}"
+					th:href="@{/home(page=${i}, size=${pages.size})}"
+					th:text="${i + 1}"></a>
+			</span>						
+		</div>		
+	</div>
+</section>
+</body>
+</html>

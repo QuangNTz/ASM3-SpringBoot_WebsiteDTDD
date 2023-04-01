@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Register</title>
+	
+	<!-- reference CSS file -->
+	<link rel="stylesheet" th:href="@{/css/register.css}">
+	
+</head>
+<body>
+	<div class="register">
+		<form class="form" id="form-2" name="f2" 
+					th:object="${account}"
+					th:action="@{/accounts/register}" onsubmit="" method="post">
+			<div class="form-group">
+				<h1>Sign up</h1>
+				
+				<input class="ip" id="user" type="text" placeholder="Enter email"
+					th:field="*{userMail}">
+				<input class="ip" id="pass" type="password" placeholder="Enter PassWord"
+					th:field="*{password}">
+				<input class="ip" id="username" type="text" placeholder="Enter Name"
+					th:field="*{fullName}">
+				<input class="ip" id="useradress" type="text" placeholder="Enter Adress"
+					th:field="*{address}">			
+				<input class="ip" id="userphone" type="number" placeholder="Enter Phone"
+					th:field="*{phone}"><br><br>
+				
+				<ul style="text-align: left">
+					<li class="error" th:if="${mess != null}" th:text="${mess}"></li>
+				</ul>
+				<!-- thông báo của validate của Spring Security -->
+				<ul style="text-align: left">
+					<li class="error" th:each="error : ${#fields.allErrors()}" th:text="${error}"></li>
+				</ul>
+				
+				<input type="submit" class="ip" id="register-btn" value="Register"><br><br>
+				
+				<a href="/accounts/login"><button id="login-btn" type="button" onclick="">Go to Login</button></a><br>
+				<a href="/home"><button id="backtohome-btn" type="button" onclick="">Back to Homepage</button></a><br>				
+			</div>
+		</form>
+
+		<div class="welcome">
+			<h1>Welcome</h1>
+			<p>Please SignUp to connected with us</p>
+		</div>
+	</div>
+</body>
+</html>

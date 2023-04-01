@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+		th:fragment="layout(content)">	
+<head>
+	<meta charset="UTF-8">
+	<title>ASM3-SpringBoot: Website bán ĐTDĐ</title>
+	<!-- reference CSS file -->
+	<link rel="stylesheet" th:href="@{/css/mystyle.css}">
+	<!-- Font Awesome -->
+<!-- 	<script src="https://kit.fontawesome.com/a4ec82e01d.js"	crossorigin="anonymous"></script> -->
+	<script src="https://kit.fontawesome.com/a4ec82e01d.js"></script>
+	<!-- Font Google -->
+	<style>
+	@import
+		url('https://fonts.googleapis.com/css2?family=Smooch&display=swap');
+	</style>
+	</head>
+<body>
+	<!-- Footer	-->
+	<div id="header">
+		<h6 th:if="${session.login_user != null}" th:text="${'Welcome ' + session.login_user.userMail}"></h6>
+															
+		<div class="header-left">
+			<h1 class="header-item">PRJ321x - ASM3</h1>
+			<p class="header-item">Welcome to my Website</p>
+		</div>
+		<div class="header-right">
+			<form action="/product/search" method="get">
+				<input class="header-search" type="text" name="name" th:value="${name != null} ? ${name}"
+					placeholder="What are you looking for?">
+			</form>
+		</div>
+	</div>
+
+	<div id="topnav">
+		<ul class="nav-list nav-list-left">
+			<li><a href="/home" style="color: orange">Home</a></li>
+			<li><a href="#">Products</a></li>
+			<li><a href="#">About us</a></li>
+		</ul>
+		
+		<ul class="nav-list nav-list-right">
+			<li th:if ="${session.login_user == null}"><a th:href="@{/accounts/login}">Login</a></li>
+			<li th:if="${session.login_user != null}"><a th:href="@{/logout}">Logout</a></li>			
+			<li th:if="${session.login_user == null}"><a th:href="@{/accounts/register}">Register</a></li>
+			<li><a th:href="@{/shoppingCart/list}"><i class="fa-solid fa-cart-shopping"></i></a></li>
+			<li th:if="${session.login_user != null}"><a th:href="@{/orders/ordered}"><i class="fa-solid fa-bag-shopping"></i></a></li>			
+		</ul>		
+	</div>
+
+
+	<!-- Body	-->
+	<div th:replace="${content}"></div>
+	
+	
+	<!-- Footer	-->
+	<div id="footer">
+	<div class="cty">
+        <p>Copyright © 2019 JavaWeb 1849 TEAM</p>
+        <p>Contact Us: Member 1 | Member 2 | Member 3 | Member 4</p>
+    </div>    
+</div>
+
+</body>
+</html>

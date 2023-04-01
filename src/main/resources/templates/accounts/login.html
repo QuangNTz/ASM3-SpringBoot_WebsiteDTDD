@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+	
+	<!-- reference CSS file -->
+	<link rel="stylesheet" th:href="@{/css/login.css}">
+	
+</head>
+<body>	
+	<div class="login">		
+		<form class="form" id="form-1"
+				th:object="${account}" 
+				th:action="@{/accounts/login}" onsubmit="" method="post">			
+			<div class="form-group">
+				<h1>Sign in</h1>
+				<!-- thông báo của Spring Security -->
+				<div class="error" th:if="${param.error}">
+		            Invalid username and password.
+		        </div>
+		        <div class="error" th:if="${param.logout}">
+		            You have been logged out.
+		        </div>
+		        
+				<input class="ip" id="user" type="text" placeholder="Enter email"
+					th:field="*{userMail}">
+				<input class="ip" id="pass" type="password" placeholder="Enter PassWord"
+					th:field="*{password}">
+				<label><input type="checkbox" name="remember">Remember me</label><br><br>				
+				
+				<input type="submit" class="ip" id="login-btn" value="Login"><br><br>
+				
+				<a href="/accounts/register"><button id="register-btn" type="button" onclick="">Go to Register</button></a><br>
+				<a href="/home"><button id="backtohome-btn" type="button" onclick="">Back to Homepage</button></a><br>
+			</div>					
+		</form>
+		
+		<div class="welcome">
+			<h1>Welcome Back</h1>
+			<p>To keep connected with us please login with your peronal info</p>
+		</div>
+	</div>			
+</body>
+</html>

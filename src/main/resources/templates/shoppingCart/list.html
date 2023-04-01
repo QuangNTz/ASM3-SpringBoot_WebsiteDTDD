@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+		th:replace="/fragments/base::layout(~{this::section})">
+<head>
+	<meta charset="UTF-8">
+	<title>Cart</title>	
+</head>
+<body>
+<!-- Body -->
+<section>
+	<div id="cart-wrapper">
+		<!-- Bảng dữ liệu cart -->
+		<table id="product-cart" style="width: 100%">
+			<thead>
+				<tr class="item">
+					<th class="item-name" style="width: 40%">Product name</th>
+					<th class="item-img">Product image</th>
+					<th class="item-price">Price</th>
+					<th class="item-quatity">Quantity</th>
+					<th class="item-amount" style="width: 10%">Amount</th>
+					<th class="item-total" style="width: 10%"></th>				
+				</tr>
+			</thead>
+			<tbody>					
+				<tr class="item" th:each="item : ${cartItems}" th:object="${item}">
+					<td th:text="${item.name}"></td>
+					<td><a th:href="@{'/product/productInfo/' + ${item.id}}"><img th:src="${item.imgSource}" alt=""></a></td>				
+					<td th:text="${#numbers.formatCurrency(item.price)}"></td>								
+					<td >
+						<form th:action="@{/shoppingCart/update}" method="get">	
+							<input type="hidden" name="id" th:value="${item.id}">
+							<input style="text-align: center" type="number" name="quantity" th:value="${item.quantity}" onmouseout="this.form.submit()">
+						</form>
+					</td>																
+					<td th:text="${#numbers.formatCurrency(item.price * item.quantity)}"></td>
+					<td><a th:href="@{'/shoppingCart/remove/' + ${item.id}}">Delete</a></td>				
+				</tr>				
+				<!-- Total -->
+				<tr class="item">					
+					<td colspan="5"></td>
+					<td th:text="${#numbers.formatCurrency(total)}"></td>					
+				</tr>
+				<tr class="submit-order">					
+					<td colspan="5"></td>
+					<td>						
+						<a th:href="@{/orders/payOrder}" th:if="${(session.login_user != null) and (total > 0)}">Pay</a>
+					</td>					
+				</tr>
+			</tbody>
+		</table><br>		
+		<!-- Bảng dữ liệu khách hàng -->		
+			<table id="customer-info" style="width: 30%" th:if="${session.login_user != null}">
+				<thead>
+					<tr>
+						<th style="width: 20%">Customer name</th>
+						<th style="width: 10%">Customer address</th>
+					</tr>		
+				</thead>					
+				<tbody>
+					<tr>
+						<td th:text="${session.login_user.userMail}"></td>
+						<td th:text="${session.login_user.address}"></td>			
+					</tr>					
+				</tbody>
+			</table>				
+			
+		
+		<div>
+			<p style="color:red" th:if="${session.login_user == null}">Please login to create the order now</p>			
+		</div>				
+	</div>
+</section>
+</body>
+</html>

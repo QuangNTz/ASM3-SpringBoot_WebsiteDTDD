@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+		th:replace="/fragments/base::layout(~{this::section})">
+<head>
+	<meta charset="UTF-8">
+	<title>Ordered</title>	
+</head>
+<body>
+<!-- Body -->
+<section>
+	<div id="cart-wrapper">
+		<!-- Bảng dữ liệu cart -->
+		<table id="product-cart"  style="width: 100%">
+			<thead>
+				<tr class="item">
+					<th class="item-orderid">Order ID</th>
+					<th class="item-name" style="width: 40%">Product name</th>
+					<th class="item-img">Product image</th>
+					<th class="item-price">Price</th>
+					<th class="item-quatity">Quantity</th>
+					<th class="item-amount" style="width: 10%">Amount</th>
+					<th class="item-total" style="width: 10%"></th>				
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="item" th:each="item : ${listOrderDetails}">				
+					<td th:text="${item.order.id}"></td>
+					<td th:text="${item.productName}"></td>
+					<td><img alt="" th:src="${item.imgSource}"></td>
+					<td th:text="${#numbers.formatCurrency(item.price)}"></td>
+					<td th:text="${item.quantity}"></td>												
+					<td th:text="${#numbers.formatCurrency(item.price * item.quantity)}"></td>
+					<td><a href=""></a></td>
+				</tr>								
+				<!-- Total -->	
+				<tr class="item">					
+					<td colspan="6"></td>
+					<td></td>					
+				</tr>
+				<tr class="submit-order">					
+					<td colspan="6"></td>
+					<td></td>					
+				</tr>
+			</tbody>
+		</table><br>		
+		<!-- Bảng dữ liệu khách hàng -->		
+		<table id="customer-info" style="width: 30%" th:if="${session.login_user != null}">
+			<thead>
+				<tr>
+					<th style="width: 20%">Customer name</th>
+					<th style="width: 10%">Customer address</th>
+				</tr>		
+			</thead>					
+			<tbody>
+				<tr>
+					<td th:text="${session.login_user.userMail}"></td>
+					<td th:text="${session.login_user.address}"></td>			
+				</tr>					
+			</tbody>
+		</table>				
+	</div>
+</section>
+</body>
+</html>
